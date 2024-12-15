@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exibindo JSON</title>
+</head>
+<body>
+    <h1>Dados do JSON</h1>
+    <div id="conteudo"></div>
+
+    <script>
+        // URL do JSON hospedado no GitHub Pages
+        fetch("https://seu-usuario.github.io/meu-repo-dados/dados.json")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("conteudo").innerHTML = `
+                    Nome: ${data.nome} <br>
+                    Valor: ${data.valor}
+                `;
+            })
+            .catch(error => console.error("Erro ao carregar JSON:", error));
+    </script>
+</body>
+</html>
