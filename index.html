@@ -1,25 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exibindo JSON</title>
+    <title>Exibição de Dados</title>
+    <script>
+        function buscarDados() {
+            // URL para acessar o arquivo JSON hospedado no GitHub Pages
+            const url = 'https://adrianofactory.github.io/factoryio/dados.json';
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(Erro ao buscar os dados: ${response.status});
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Exibindo os valores na página
+                    document.getElementById('dado1').textContent = data.dado1;
+                    document.getElementById('dado2').textContent = data.dado2;
+                    document.getElementById('dado3').textContent = data.dado3;
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById('erro').textContent = "Erro ao carregar os dados.";
+                });
+        }
+
+        // Atualizar os dados a cada 10 segundos
+        window.onload = function () {
+            buscarDados(); // Primeira chamada
+            setInterval(buscarDados, 10000); // Atualização a cada 10 segundos
+        }
+    </script>
 </head>
 <body>
-    <h1>Dados do JSON</h1>
-    <div id="conteudo"></div>
-
-    <script>
-        // URL do JSON hospedado no GitHub Pages
-        fetch("https://adrianofactory.github.io/factoryio/dados.json")
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("conteudo").innerHTML = `
-                    Nome: ${data.nome} <br>
-                    Valor: ${data.valor}
-                `;
-            })
-            .catch(error => console.error("Erro ao carregar JSON:", error));
-    </script>
+    <h1>Exibição de Dados</h1>
+    <p>Dado 1: <span id="dado1">Carregando...</span></p>
+    <p>Dado 2: <span id="dado2">Carregando...</span></p>
+    <p>Dado 3: <span id="dado3">Carregando...</span></p>
+    <p id="erro" style="color: red;"></p>
 </body>
 </html>
