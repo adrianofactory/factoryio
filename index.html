@@ -1,45 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exibição de Dados</title>
-    <script>
-        function buscarDados() {
-            // URL para acessar o arquivo JSON hospedado no GitHub Pages
-            const url = 'https://adrianofactory.github.io/factoryio/dados.json';
-
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(Erro ao buscar os dados: ${response.status});
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Exibindo os valores na página
-                    document.getElementById('dado1').textContent = data.dado1;
-                    document.getElementById('dado2').textContent = data.dado2;
-                    document.getElementById('dado3').textContent = data.dado3;
-                })
-                .catch(error => {
-                    console.error(error);
-                    document.getElementById('erro').textContent = "Erro ao carregar os dados.";
-                });
-        }
-
-        // Atualizar os dados a cada 10 segundos
-        window.onload = function () {
-            buscarDados(); // Primeira chamada
-            setInterval(buscarDados, 10000); // Atualização a cada 10 segundos
-        }
-    </script>
+    <title>Exibir Dados JSON</title>
 </head>
 <body>
-    <h1>Exibição de Dados</h1>
-    <p>Dado 1: <span id="dado1">Carregando...</span></p>
-    <p>Dado 2: <span id="dado2">Carregando...</span></p>
-    <p>Dado 3: <span id="dado3">Carregando...</span></p>
-    <p id="erro" style="color: red;"></p>
+    <h1>Dados do Arquivo JSON</h1>
+    <div id="conteudo"></div>
+
+    <script>
+        // URL do arquivo JSON no GitHub
+        const url = "https://raw.githubusercontent.com/adrianofactory/factoryio/main/dados.json";
+
+        // Função para buscar e exibir os dados
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao carregar o arquivo JSON");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Seleciona a div onde os dados serão exibidos
+                const conteudo = document.getElementById("conteudo");
+
+                // Exibindo os dados formatados na página
+                conteudo.innerHTML = `
+                    <p><strong>Nome:</strong> ${data.nome}</p>
+                    <p><strong>Idade:</strong> ${data.idade}</p>
+                    <p><strong>Cidade:</strong> ${data.cidade}</p>
+                `;
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                document.getElementById("conteudo").innerText = "Erro ao carregar os dados.";
+            });
+    </script>
 </body>
 </html>
