@@ -8,31 +8,41 @@
 <body>
   <h1>Atualizar Arquivos JSON no GitHub</h1>
   
-  <button id="updateBlue">Buy Blue.json</button>
-  <button id="updateGreen">Buy Green.json</button>
+  <button id="updateBlue">Atualizar Blue.json</button>
+  <button id="updateGreen">Atualizar Green.json</button>
+  
+  <!-- Área para exibir mensagens de status -->
+  <div id="statusMessage" style="margin-top: 20px; font-weight: bold;"></div>
 
   <script>
-    console.log("Carregamento OK");
-    const GITHUB_TOKEN = "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"; // Substitua pelo seu token pessoal
-    const REPO_OWNER = "adrianofactory"; // Substitua pelo nome do seu usuário ou organização no GitHub
-    const REPO_NAME = "factoryio"; // Substitua pelo nome do repositório onde estão os arquivos
+    const GITHUB_TOKEN = "SEU_TOKEN_AQUI"; // Substitua pelo seu token pessoal
+    const REPO_OWNER = "SEU_USUARIO"; // Substitua pelo nome do seu usuário ou organização no GitHub
+    const REPO_NAME = "SEU_REPOSITORIO"; // Substitua pelo nome do repositório onde estão os arquivos
+
+    // Função para atualizar mensagens de status na página
+    function updateStatusMessage(message, isError = false) {
+      const statusDiv = document.getElementById("statusMessage");
+      statusDiv.textContent = message;
+      statusDiv.style.color = isError ? "red" : "green"; // Vermelho para erros, verde para sucesso
+    }
 
     // Função genérica para atualizar um arquivo no GitHub
     async function updateFile(fileName, content) {
       const url = https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${fileName};
-      
+      updateStatusMessage(Atualizando ${fileName}...); // Mensagem inicial
+
       try {
         // Obtendo o SHA do arquivo atual
         const getFileResponse = await fetch(url, {
           method: "GET",
           headers: {
-            Authorization: Bearer ${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},
+            Authorization: Bearer ${GITHUB_TOKEN},
             "Content-Type": "application/json",
           },
         });
 
         if (!getFileResponse.ok) {
-          console.error(Erro ao obter ${fileName}:, getFileResponse.statusText);
+          updateStatusMessage(Erro ao obter ${fileName}: ${getFileResponse.statusText}, true);
           return;
         }
 
@@ -57,12 +67,12 @@
         });
 
         if (updateResponse.ok) {
-          console.log(${fileName} atualizado com sucesso!);
+          updateStatusMessage(${fileName} atualizado com sucesso!);
         } else {
-          console.error(Erro ao atualizar ${fileName}:, updateResponse.statusText);
+          updateStatusMessage(Erro ao atualizar ${fileName}: ${updateResponse.statusText}, true);
         }
       } catch (error) {
-        console.error(Erro ao processar ${fileName}:, error);
+        updateStatusMessage(Erro ao processar ${fileName}: ${error.message}, true);
       }
     }
 
