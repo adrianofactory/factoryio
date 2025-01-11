@@ -12,16 +12,16 @@
   <button id="updateGreen">Atualizar Green.json</button>
 
   <script>
-    const GITHUB_TOKEN = "SEU_TOKEN_AQUI"; // Substitua pelo token gerado no GitHub
-    const REPO_OWNER = "SEU_USUARIO";      // Substitua pelo nome do dono do repositório
-    const REPO_NAME = "SEU_REPOSITORIO";  // Substitua pelo nome do repositório
+    const GITHUB_TOKEN = "SEU_TOKEN_AQUI"; // Substitua pelo seu token pessoal
+    const REPO_OWNER = "SEU_USUARIO"; // Substitua pelo nome do seu usuário ou organização no GitHub
+    const REPO_NAME = "SEU_REPOSITORIO"; // Substitua pelo nome do repositório onde estão os arquivos
 
-    // Função genérica para atualizar o arquivo no GitHub
+    // Função genérica para atualizar um arquivo no GitHub
     async function updateFile(fileName, content) {
       const url = https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${fileName};
       
       try {
-        // Obtendo o SHA do arquivo atual no GitHub
+        // Obtendo o SHA do arquivo atual
         const getFileResponse = await fetch(url, {
           method: "GET",
           headers: {
@@ -32,3 +32,56 @@
 
         if (!getFileResponse.ok) {
           console.error(Erro ao obter ${fileName}:, getFileResponse.statusText);
+          return;
+        }
+
+        const fileData = await getFileResponse.json();
+        const sha = fileData.sha;
+
+        // Codificando o conteúdo atualizado em Base64
+        const updatedContent = btoa(JSON.stringify(content, null, 2));
+
+        // Atualizando o arquivo no GitHub
+        const updateResponse = await fetch(url, {
+          method: "PUT",
+          headers: {
+            Authorization: Bearer ${GITHUB_TOKEN},
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: Atualizando ${fileName},
+            content: updatedContent,
+            sha: sha,
+          }),
+        });
+
+        if (updateResponse.ok) {
+          console.log(${fileName} atualizado com sucesso!);
+        } else {
+          console.error(Erro ao atualizar ${fileName}:, updateResponse.statusText);
+        }
+      } catch (error) {
+        console.error(Erro ao processar ${fileName}:, error);
+      }
+    }
+
+    // Configurando o botão para atualizar "blue.json"
+    document.getElementById("updateBlue").addEventListener("click", () => {
+      const blueContent = {
+        color: "blue",
+        value: Math.floor(Math.random() * 100), // Exemplo de valor dinâmico
+      };
+      updateFile("blue.json", blueContent);
+    });
+
+    // Configurando o botão para atualizar "green.json"
+    document.getElementById("updateGreen").addEventListener("click", () => {
+      const greenContent = {
+        color: "green",
+        value: Math.floor(Math.random() * 100), // Exemplo de valor dinâmico
+      };
+      updateFile("green.json", greenContent);
+    });
+  </script>
+</body>
+</html>
