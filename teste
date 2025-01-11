@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atualizar JSON no GitHub</title>
+</head>
+<body>
+  <h1>Atualizar Arquivos JSON no GitHub</h1>
+  
+  <button id="updateBlue">Atualizar Blue.json</button>
+  <button id="updateGreen">Atualizar Green.json</button>
+
+  <script>
+    const GITHUB_TOKEN = "SEU_TOKEN_AQUI"; // Substitua pelo token gerado no GitHub
+    const REPO_OWNER = "SEU_USUARIO";      // Substitua pelo nome do dono do repositório
+    const REPO_NAME = "SEU_REPOSITORIO";  // Substitua pelo nome do repositório
+
+    // Função genérica para atualizar o arquivo no GitHub
+    async function updateFile(fileName, content) {
+      const url = https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${fileName};
+      
+      try {
+        // Obtendo o SHA do arquivo atual no GitHub
+        const getFileResponse = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: Bearer ${GITHUB_TOKEN},
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!getFileResponse.ok) {
+          console.error(Erro ao obter ${fileName}:, getFileResponse.statusText);
