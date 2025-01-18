@@ -1,64 +1,80 @@
+
+    //const token = 'ghp_yw0UEIK79jnTK1VOg5QE7aIp6a6q9r3a8MSM'; // Insira seu token de acesso do GitHub
+   // const owner = 'adrianofactory';            // Nome do proprietário do repositório
+    //const repo = 'factoryio';         // Nome do repositório no GitHub
+
+    
+
+
+////teste
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atualizar Arquivos JSON NOVO</title>
+  <title>Atualizar Arquivos JSON</title>
 </head>
 <body>
   <h1>Atualizar Arquivos JSON</h1>
-  <button onclick="updateFile('blue')">Buy Blue</button>
-  <button onclick="updateFile('green')">Buy Green</button>
+  <button id="blueButton">Buy Blue</button>
+  <button id="greenButton">Buy Green</button>
 
   <script>
-    const token = 'ghp_yw0UEIK79jnTK1VOg5QE7aIp6a6q9r3a8MSM'; // Insira seu token de acesso do GitHub
-    const owner = 'adrianofactory';            // Nome do proprietário do repositório
+    document.addEventListener("DOMContentLoaded", function () {
+      // Adicionando eventos aos botões
+      document.getElementById("blueButton").onclick = () => updateFile("blue");
+      document.getElementById("greenButton").onclick = () => updateFile("green");
+
+      const token = 'ghp_yw0UEIK79jnTK1VOg5QE7aIp6a6q9r3a8MSM'; // Insira seu token de acesso do GitHub
+   const owner = 'adrianofactory';            // Nome do proprietário do repositório
     const repo = 'factoryio';         // Nome do repositório no GitHub
 
-    async function updateFile(color) {
-      const fileName = ${color}.json;
-      const apiUrl = https://api.github.com/repos/${owner}/${repo}/contents/${fileName};
+      async function updateFile(color) {
+        const fileName = ${color}.json;
+        const apiUrl = https://api.github.com/repos/${owner}/${repo}/contents/${fileName};
 
-      try {
-        // Obter o conteúdo atual do arquivo
-        const getResponse = await fetch(apiUrl, {
-          headers: {
-            Authorization: token ${token},
-          },
-        });
+        try {
+          // Obter conteúdo atual do arquivo
+          const getResponse = await fetch(apiUrl, {
+            headers: {
+              Authorization: token ${token},
+            },
+          });
 
-        if (!getResponse.ok) {
-          throw new Error(Erro ao buscar o arquivo: ${getResponse.statusText});
+          if (!getResponse.ok) {
+            throw new Error(Erro ao buscar o arquivo: ${getResponse.statusText});
+          }
+
+          const fileData = await getResponse.json();
+          const sha = fileData.sha; // SHA atual do arquivo
+
+          // Atualizar o arquivo com o conteúdo "1"
+          const content = btoa('1'); // Converte "1" para Base64
+          const updateResponse = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+              'Authorization': token ${token},
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: Atualizando ${fileName},
+              content: content,
+              sha: sha,
+            }),
+          });
+
+          if (!updateResponse.ok) {
+            throw new Error(Erro ao atualizar o arquivo: ${updateResponse.statusText});
+          }
+
+          alert(${fileName} atualizado com sucesso!);
+        } catch (error) {
+          console.error(error);
+          alert('Erro ao atualizar o arquivo.');
         }
-
-        const fileData = await getResponse.json();
-        const sha = fileData.sha; // SHA atual do arquivo
-
-        // Atualizar o arquivo com o novo conteúdo ("1")
-        const content = btoa('1'); // Converte "1" para Base64
-        const updateResponse = await fetch(apiUrl, {
-          method: 'PUT',
-          headers: {
-            'Authorization': token ${token},
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: Atualizando ${fileName},
-            content: content,
-            sha: sha,
-          }),
-        });
-
-        if (!updateResponse.ok) {
-          throw new Error(Erro ao atualizar o arquivo: ${updateResponse.statusText});
-        }
-
-        alert(${fileName} atualizado com sucesso!);
-      } catch (error) {
-        console.error(error);
-        alert('Erro ao atualizar o arquivo.');
       }
-    }
+    });
   </script>
 </body>
 </html>
