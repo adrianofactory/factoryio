@@ -1,9 +1,3 @@
-
-    
-
-
-////teste
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,10 +16,11 @@
       document.getElementById("blueButton").onclick = () => updateFile("blue");
       document.getElementById("greenButton").onclick = () => updateFile("green");
 
-      const token = 'ghp_yw0UEIK79jnTK1VOg5QE7aIp6a6q9r3a8MSM'; // Insira seu token de acesso do GitHub
-   const owner = 'adrianofactory';            // Nome do proprietário do repositório
+    const token = 'ghp_yw0UEIK79jnTK1VOg5QE7aIp6a6q9r3a8MSM'; // Insira seu token de acesso do GitHub
+    const owner = 'adrianofactory';            // Nome do proprietário do repositório
     const repo = 'factoryio';         // Nome do repositório no GitHub
-
+    const branch = 'main';
+        
       async function updateFile(color) {
         const fileName = ${color}.json;
         const apiUrl = https://api.github.com/repos/${owner}/${repo}/contents/${fileName};
@@ -34,7 +29,7 @@
           // Obter conteúdo atual do arquivo
           const getResponse = await fetch(apiUrl, {
             headers: {
-              Authorization: token ${token},
+              Authorization: 'Bearer ${token}',
             },
           });
 
@@ -51,7 +46,9 @@
             method: 'PUT',
             headers: {
               'Authorization': token ${token},
+                'Accept': 'application/vnd.github+json'
               'Content-Type': 'application/json',
+                
             },
             body: JSON.stringify({
               message: Atualizando ${fileName},
