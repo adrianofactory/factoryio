@@ -43,7 +43,8 @@
         const updateResponse = await fetch(updateFileUrl, {
           method: "PUT",
           headers: {
-            Authorization: Bearer ${GITHUB_TOKEN},
+            'Authorization': 'Bearer ${GITHUB_TOKEN}',
+            'Accept': 'application/vnd.github+json',
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
