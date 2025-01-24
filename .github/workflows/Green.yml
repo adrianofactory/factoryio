@@ -1,4 +1,4 @@
-name: Atualizar JSON
+name: Atualizar GREEN
 
 on:
   workflow_dispatch:
