@@ -10,11 +10,6 @@
   <title>Atualizar JSON</title>
 </head>
 <body>
-  //const token = "ghp_yw0UEIK79jnTK1VOg5QE7aIp6a6q9r3a8MSM"; // Substitua pelo seu token do GitHub
-    //const owner = "adrianofactory"; // Substitua pelo seu nome de usuário no GitHub
-    //const repo = "factoryio"; // Substitua pelo nome do repositório
-    //const path = "blue.json"; // Caminho para o arquivo no repositório
-    //const branch = "main"; // Nome da branch principal (geralmente "main" ou "master")
   
   <h1>Atualizar Arquivo JSON</h1>
   <form id="updateForm">
@@ -33,7 +28,7 @@
     async function updateJsonFile(data) {
       try {
         // Obter o SHA do arquivo existente
-        const getFileUrl = https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH};
+        const getFileUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
         const getFileResponse = await fetch(getFileUrl, {
           headers: { Authorization: Bearer ${GITHUB_TOKEN} },
         });
