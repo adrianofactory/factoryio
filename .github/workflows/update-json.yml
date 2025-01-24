@@ -30,7 +30,8 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add blue.json
-        git commit -m "Atualização do arquivo JSON via GitHub Actions"
+        git diff --cached --quiet || git commit -m "Atualização do arquivo JSON via GitHub Actions"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         git push
       env:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
