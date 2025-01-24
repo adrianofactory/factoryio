@@ -23,9 +23,11 @@ jobs:
 
       # Passo 3: Commitar e enviar as alterações para o repositório
       - name: Commit e Push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add blue.json
           git commit -m "Atualização do arquivo JSON via GitHub Actions"
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:main
