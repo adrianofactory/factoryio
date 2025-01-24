@@ -19,7 +19,29 @@
   </form>
 
   <script>
-    const GITHUB_TOKEN = "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";
+     // URL do arquivo JSON no GitHub
+        const url = "https://raw.githubusercontent.com/adrianofactory/factoryio/main/dados.json";
+
+        // Função para buscar e exibir os dados
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao carregar o arquivo JSON");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Seleciona a div onde os dados serão exibidos
+                const conteudo = document.getElementById("conteudo");
+
+                // Exibindo os dados formatados na página
+               
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                document.getElementById("conteudo").innerText = "Erro ao carregar os dados.";
+            });
+    const GITHUB_TOKEN =  ${data.Key};
     const REPO_OWNER = "adrianofactory";
     const REPO_NAME = "factoryio";
     const FILE_PATH = "blue.json";
