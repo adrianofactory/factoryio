@@ -25,13 +25,21 @@ jobs:
         echo "Conteúdo decodificado salvo em blue.json:"
         cat blue.json
 
-    - name: Commit e Push
+    - name: Configurar Git para autenticação
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+    - name: Garantir que o repositório está atualizado
+      run: |
+        git fetch --all
+        git pull origin main || echo "Nada para atualizar"
+
+    - name: Commit e Push
+      run: |
         git add blue.json
         git diff --cached --quiet || git commit -m "Atualização do arquivo JSON via GitHub Actions"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         git push
       env:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
