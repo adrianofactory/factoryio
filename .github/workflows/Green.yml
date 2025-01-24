@@ -19,7 +19,7 @@ jobs:
       # Passo 2: Decodificar o conteúdo JSON e salvar no arquivo
       - name: Atualizar JSON
         run: |
-         printf'%s' $(echo"${{ github.event.inputs.jsonContent }}" | base64 --decode > blue.json
+         printf'%s' $(echo"${{ github.event.inputs.jsonContent }}" | base64 --decode > green.json
 
       # Passo 3: Commitar e enviar as alterações para o repositório
       - name: Commit e Push
