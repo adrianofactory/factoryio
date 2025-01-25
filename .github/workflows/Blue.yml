@@ -18,7 +18,7 @@ jobs:
           "key1": "value1",
           "key2": "value2",
           "key3": "value3",
-          "timestamp": "$(date +"%Y-%m-%dT%H:%M:%S""
+          "timestamp": $(date +"%Y-%m-%dT%H:%M:%S"),
         }
         EOF
 
