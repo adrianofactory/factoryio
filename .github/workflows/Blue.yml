@@ -1,11 +1,7 @@
 name: Atualizar BLUE
 
 on:
-  workflow_dispatch:
-    inputs:
-      jsonContent:
-        description: "Conteúdo do JSON em Base64"
-        required: true
+  workflow_dispatch: # Disparo manual
 
 jobs:
   update-json:
@@ -14,15 +10,18 @@ jobs:
     - name: Checkout do repositório
       uses: actions/checkout@v3
 
-    - name: Decodificar e salvar JSON
+    - name: Criar e salvar JSON fixo
       run: |
-        echo "Validando o input recebido em Base64..."
-        echo "${{ github.event.inputs.jsonContent }}"
+        echo "Criando conteúdo fixo para o arquivo JSON..."
+        cat <<EOF > blue.json
+        {
+          "key1": "value1",
+          "key2": "value2",
+          "key3": "value3"
+        }
+        EOF
 
-        echo "Decodificando o conteúdo Base64..."
-        printf '%s' "$(echo '${{ github.event.inputs.jsonContent }}' | base64 --decode)" > blue.json
-
-        echo "Conteúdo decodificado salvo em blue.json:"
+        echo "Conteúdo salvo em blue.json:"
         cat blue.json
 
     - name: Configurar Git para autenticação
