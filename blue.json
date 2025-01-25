@@ -2,5 +2,5 @@
   "key1": "value1",
   "key2": "value2",
   "key3": "value3",
-  "timestamp": ""
+  "timestamp": "$(date +"%Y-%m-%dT%H:%M:%S""
 }
