@@ -13,7 +13,7 @@ jobs:
     - name: Criar e salvar JSON fixo
       run: |
         echo "Criando conteúdo fixo para o arquivo JSON..."
-        cat <<EOF > green.json
+        cat <<EOF > blue.json
         {
           "key1": "value1",
           "key2": "value2",
@@ -21,7 +21,7 @@ jobs:
         }
         EOF
 
-        echo "Conteúdo salvo em green.json:"
+        echo "Conteúdo salvo em blue.json:"
         cat blue.json
 
     - name: Configurar Git para autenticação
@@ -37,7 +37,7 @@ jobs:
 
     - name: Commit e Push
       run: |
-        git add green.json
+        git add blue.json
         git diff --cached --quiet || git commit -m "Atualização do arquivo JSON BLUE via GitHub Actions"
         git push
       env:
