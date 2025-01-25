@@ -39,7 +39,7 @@ jobs:
     - name: Commit e Push
       run: |
         git add blue.json
-        git diff --cached --quiet || git commit -m "Atualização do arquivo JSON via GitHub Actions"
+        git diff --cached --quiet || git commit -m "Atualização do arquivo JSON BLUE via GitHub Actions"
         git push
       env:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
