@@ -40,8 +40,16 @@ jobs:
     - name: Commit e Push
       run: |
         git add blue.json
-        # Commit sem a necessidade de verificar se houve alteração, só realiza o commit se o arquivo foi modificado
         git commit -m "Atualização do arquivo JSON BLUE via GitHub Actions" || echo "Nada para commitar"
         git push
       env:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Passo adicional para rodar o build após a atualização
+    - name: Rodar Build (substitua pelo seu comando de build)
+      run: |
+        echo "Iniciando o processo de build..."
+        # Adicione o comando do seu processo de build aqui, por exemplo:
+        # npm install && npm run build
+        # ou
+        # make build
