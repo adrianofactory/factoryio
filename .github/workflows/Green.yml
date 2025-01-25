@@ -22,7 +22,7 @@ jobs:
         EOF
 
         echo "Conteúdo salvo em green.json:"
-        cat blue.json
+        cat green.json
 
     - name: Configurar Git para autenticação
       run: |
