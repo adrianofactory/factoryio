@@ -1,4 +1,4 @@
-name: Atualizar BLUE
+name: Atualizar GREEN
 
 on:
   workflow_dispatch: # Disparo manual
