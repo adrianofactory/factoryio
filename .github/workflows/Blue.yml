@@ -1,4 +1,4 @@
-name: Atualizar BLUE
+name: Atualizar GREEN
 
 on:
   workflow_dispatch: # Disparo manual
@@ -6,7 +6,6 @@ on:
 jobs:
   update-json:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout do repositório
       uses: actions/checkout@v3
@@ -14,7 +13,7 @@ jobs:
     - name: Criar e salvar JSON fixo
       run: |
         echo "Criando conteúdo fixo para o arquivo JSON..."
-        cat <<EOF > blue.json
+        cat <<EOF > green.json
         {
           "key1": "value1",
           "key2": "value2",
@@ -22,7 +21,7 @@ jobs:
         }
         EOF
 
-        echo "Conteúdo salvo em blue.json:"
+        echo "Conteúdo salvo em green.json:"
         cat blue.json
 
     - name: Configurar Git para autenticação
@@ -35,21 +34,11 @@ jobs:
       run: |
         git fetch --all
         git pull origin main || echo "Nada para atualizar"
-        git reset --hard origin/main  # Garantir que o estado local esteja sincronizado com o remoto
 
     - name: Commit e Push
       run: |
-        git add blue.json
-        git commit -m "Atualização do arquivo JSON BLUE via GitHub Actions" || echo "Nada para commitar"
+        git add green.json
+        git diff --cached --quiet || git commit -m "Atualização do arquivo JSON BLUE via GitHub Actions"
         git push
       env:
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # Passo adicional para rodar o build após a atualização
-    - name: Rodar Build (substitua pelo seu comando de build)
-      run: |
-        echo "Iniciando o processo de build..."
-        # Adicione o comando do seu processo de build aqui, por exemplo:
-        # npm install && npm run build
-        # ou
-        make build
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
