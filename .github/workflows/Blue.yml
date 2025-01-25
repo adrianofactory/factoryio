@@ -52,4 +52,4 @@ jobs:
         # Adicione o comando do seu processo de build aqui, por exemplo:
         # npm install && npm run build
         # ou
-        # make build
+        make build
